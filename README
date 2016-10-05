@@ -1,0 +1,12 @@
+NOTE: SUBJECT TO CHANGE
+
+Web application that creates user profiles detailing interests and most frequently discussed topics (obtained from twitter/facebook) and links these people with mutual friends that have those same interests. 
+	APIs: TweetSentiments, Facebook, whatever else
+	Database: contains profile on users, updates every search or every 30 days
+		Assuming updating on search doesn’t take too long
+	Views:
+		1. Front page/search
+		2. Personal profile
+		3. Relationship maps
+		4. Group estimation/profile
+
