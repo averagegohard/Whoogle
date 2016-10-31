@@ -1,0 +1,6 @@
+<h1>Whoogle Search</h1>
+
+<%= form_tag 'index', :method => "get" do %>
+    <%= text_field_tag :text, params[:text] %>
+    <%= submit_tag "Search", :name => nil %>
+<% end %>
