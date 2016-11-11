@@ -8,7 +8,7 @@ module SearchHelper
 		Output: The 'concepts' that they talk about the most
 		"""
 		# our api options and details
-		key = "VKuS1JkgnomshHxfv1Yu8AIS6tzGp1aUztsjsnorGKylwIxnMQ"
+		key = ENV['ALCHEMY_PUBLISHED_KEY']
         accept = 'application/json'
         @options = {'X-Mashape-Key' => key, 'Accept' => accept}
         # the actual response
