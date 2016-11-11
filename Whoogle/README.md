@@ -1,24 +1,24 @@
+# README
 
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
+Things you may want to cover:
 
-Welcome to your Rails project on Cloud9 IDE!
+* Ruby version
 
-To get started, just do the following:
+* System dependencies
 
-1. Run the project with the "Run Project" button in the menu bar on top of the IDE.
-2. Preview your new app by clicking on the URL that appears in the Run panel below (https://whoogle-averagegohard.c9users.io/).
+* Configuration
 
-Happy coding!
-The Cloud9 IDE team
+* Database creation
 
+* Database initialization
 
-## Support & Documentation
+* How to run the test suite
 
-Visit http://docs.c9.io for support, or to learn more about using Cloud9 IDE. 
-To watch some training videos, visit http://www.youtube.com/user/c9ide
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...

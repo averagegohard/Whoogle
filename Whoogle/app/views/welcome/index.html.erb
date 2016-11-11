@@ -1,9 +1,6 @@
 <h1>Whoogle Search</h1>
-
-<%= form_tag 'search', :method => "get" do %>
-    <%= text_field_tag :text, params[:text] %>
-    <%= submit_tag "Search", :name => nil %>
-    <% if(params[:text]) %>
-        <%= @query %>
-    <% end %>
+<%= form_tag("search", method: "get") do %>
+  <%= label_tag(:handle, "Enter Twitter Handle:") %>
+  <%= text_field_tag(:handle) %>
+  <%= submit_tag("Get Interests", :name => nil) %>
 <% end %>
