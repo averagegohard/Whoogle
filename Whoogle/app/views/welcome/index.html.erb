@@ -1,6 +1,15 @@
+<!-- homepage -->
 <h1>Whoogle Search</h1>
+<!-- when the button is clicked, perform a 'get' request on 'search'
+('search's routing is found in /config/routes.rb)-->
 <%= form_tag("search", method: "get") do %>
+  <!-- whatever is passed into the text bar will be
+  assigned to the ":handle" variable-->
+   <!-- NOTE: The controller that we will route to
+   (in this case the search_controller) will have
+   access to any variables that we specify in this view-->
   <%= label_tag(:handle, "Enter Twitter Handle:") %>
   <%= text_field_tag(:handle) %>
+  <!-- TODO find out what :name => nil does -->
   <%= submit_tag("Get Interests", :name => nil) %>
 <% end %>

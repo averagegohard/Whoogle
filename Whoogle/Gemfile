@@ -1,6 +1,12 @@
 source 'https://rubygems.org'
 
+# HTTParty used in order to make HTTP requests
 gem 'httparty'
+
+"""
+	The below gems are default when making a new rails app
+	We can change/remove them if we want, but we probably shouldn't
+"""
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
