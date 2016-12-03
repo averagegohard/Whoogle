@@ -1,4 +1,4 @@
 # this is where you should put the keys
-APP_ID = ''
-APP_SECRET = ''
-APP_NAME = ''
+FB_APP_ID = ''
+FB_APP_SECRET = ''
+FB_APP_NAME = ''
