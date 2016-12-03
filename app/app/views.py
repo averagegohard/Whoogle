@@ -3,11 +3,9 @@ from flask import g, render_template, redirect, request, session, url_for
 
 from app import app, db
 from models import User
-
+from keys import *
 # Facebook app details
-FB_APP_ID = ''
-FB_APP_NAME = ''
-FB_APP_SECRET = ''
+
 
 
 @app.route('/')
