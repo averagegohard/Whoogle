@@ -1,0 +1,30 @@
+<html>
+<p><img src="https://farm6.staticflickr.com/5756/30395640214_1287bf641c_b.jpg" alt="" width="107" height="48" /></p>
+<h2 style="text-align: center;"><strong>Search Results</strong></h2>
+<div align="center">
+<table border="1">
+<tbody>
+<tr><th width="200">Name</th><th width="200">Handle</th><th width="200">Photo</th></tr>
+{% if search %}
+<tr>
+<td style="text-align: center;"><a href='/profile/{{search}}'>{{ search }}</td>
+<td><center><span style="text-decoration: underline; color: #3366ff;"></span><center></center></center></td>
+<td><br /><img style="display: block; margin-left: auto; margin-right: auto;" src="" alt="" width="67" height="67" /></td>
+</tr>
+{% endif %}
+
+<tr>
+<td style="text-align: center;">Perry Donham</td>
+<td><center><span style="text-decoration: underline; color: #3366ff;">@PerrydBUCS</span><center></center></center></td>
+<td><br /><img style="display: block; margin-left: auto; margin-right: auto;" src="https://pbs.twimg.com/profile_images/677506496964534272/0Q9yoFnq.jpg" alt="" width="67" height="67" /></td>
+</tr>
+<tr>
+<td style="text-align: center;">&nbsp;Dunham Perry</td>
+<td><center><span style="color: #3366ff;"><a class="ProfileHeaderCard-screennameLink u-linkComplex js-nav" style="color: #3366ff;" href="https://twitter.com/Dunham_Perry">@<span class="u-linkComplex-target">Dunham_Perry</span></a></span><br /><center></center></center></td>
+<td><center><img src="https://pbs.twimg.com/profile_images/724666570497089536/L9RKK5Ep.jpg" alt="" width="67" height="67" /></center></td>
+</tr>
+</tbody>
+</table>
+</div>
+<a href='/search'>Search</a>
+</html>
