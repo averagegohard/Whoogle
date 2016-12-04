@@ -82,3 +82,17 @@ def get_current_user():
     # Commit changes to the database and set the user as a global g.user
     db.session.commit()
     g.user = session.get('user', None)
+
+@app.route("/search", methods=['GET'])
+def search():
+	return render_template('search.html')
+	#search=request.form.get('searchterm')
+	
+@app.route("/profile", methods=['GET'])
+def profile():
+	return render_template('profile.html')
+	
+@app.route("/results", methods=['GET','POST'])
+def results():
+	name = request.form.get('name')
+	return render_template('results.html')
