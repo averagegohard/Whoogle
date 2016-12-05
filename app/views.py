@@ -4,6 +4,7 @@ from flask import Flask, g, render_template, redirect, request, session, url_for
 from flaskext.mysql import MySQL
 import flask_login as flask_login
 import datetime
+import operator
 
 #for image uploading
 from werkzeug import secure_filename
@@ -17,7 +18,7 @@ app = Flask(__name__)
 
 #These will need to be changed according to your creditionals
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'wtfidget7120'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'mynewpass'
 app.config['MYSQL_DATABASE_DB'] = 'whoogle'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -32,8 +33,8 @@ class TwitterHelper(object):
 	def __init__(self):
 		"""
 		input: none
-		graph is access to facebook api
-		alchemy_language is access to alchemy api
+		self.api: access to twitterAPI
+		self.alchemy_language: access to AlchemyAPI
 		"""
 		# authentication
 		self.auth = tweepy.OAuthHandler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
@@ -43,7 +44,24 @@ class TwitterHelper(object):
 		# alchemy api
 		self.alchemy_language = AlchemyLanguageV1(api_key=ALCHEMY_KEY)
 
+
+	def TweetSentAnalysis(self, twitter_handle, max_items=10):
+		""" gets sentiment analysis on last 3200 tweets of user
+		input: max_items - the number of entities to extract from all posts of the searched person
+		output: json holding information about sentiment and emotions associated with the entities (10 by default)
+		"""
+		# get twitter data
+		data = self.getTimelineAndRetweets(twitter_handle)
+		# perform sentiment analysis
+		raw = json.loads(self.performSentimentAnalysis(data))
+		return self.stripOutput(raw)
+
+
 	def searchUsers(self, query):
+		""" searches for users
+		input: query
+		output: stripped json with relevant information
+		"""
 		relevant_keys = ['name', 'screen_name', 'location', 'profile_image_url', 'description', 'followers_count']
 		# maximum of 20 users can be displayed
 		full_dict = self.api.search_users(q=query)
@@ -59,27 +77,36 @@ class TwitterHelper(object):
 			ret.append(temp_dict)
 		return ret
 
-	def getTimeline(self, screen_name):
-		return self.api.user_timeline(screen_names=screen_name, count=3200)[0]
+	def stripOutput(self, raw):
+		"""
+		helper function
+		"""
+		ret = []
+		# strip/format the raw response
+		for entity in raw['entities']:
+			stripped_entitity = {}
+			stripped_entitity['text'] = entity['text']
+			max_emotion = max(entity['emotions'].iteritems(), key=operator.itemgetter(1))
+			stripped_entitity['emotion'] = {'type': max_emotion[0], 'value': max_emotion[1]}
+			ret.append(stripped_entitity)
+		return ret
 
 	def getTimelineAndRetweets(self, screen_name):
-		return self.api.user_timeline(screen_names=screen_name, since_id=0, count=200, include_rts=1)
-
-	def TweetSentAnalysis(self, max_items=10):
 		"""
-		input: max_items - the number of entities to extract from all posts of the searched person
-		output: json holding information about sentiment and emotions associated with the entities
+		helper function
 		"""
-		# get FB data
 		rawTweets = ''
-		pass
-
-		# return self.performSentimentAnalysis(rawStatusUpdateString, max_items)
+		for status in tweepy.Cursor(self.api.user_timeline, screen_name=screen_name, count=200).items():
+			# process status here
+			if status.text[-1] not in ['!', '?', '.']:
+				status.text += '.'
+			status.text += '\n'
+			rawTweets += status.text
+		return rawTweets
 
 	def performSentimentAnalysis(self, text, max_items=10):
 		"""
-		input: text to analyze
-		output: json holding analysis of entities
+		helper function
 		"""
 		return json.dumps(
 		  self.alchemy_language.entities(
@@ -189,8 +216,9 @@ def results(input_name):
 	#return render_template('results.html', search = input_name)
 	
 	
-@app.route("/profile/<string:name>", methods=['GET'])
-def profile(name):
+@app.route("/profile/<string:handle>", methods=['GET'])
+def profile(handle):
     helper = TwitterHelper()
-    returned = helper.searchUsers(name)
-    return render_template('profile.html', user = name, profile = returned[0])
+    returned = helper.searchUsers(handle)
+    tsentiment = helper.TweetSentAnalysis(handle)
+    return render_template('profile.html', profile = returned[0], usersentiment = tsentiment)
