@@ -5,6 +5,14 @@
 <table border="1">
 <tbody>
 <tr><th width="200">Name</th><th width="200">Handle</th><th width="200">Photo</th></tr>
+{% if search %}
+<tr>
+<td style="text-align: center;"><a href='/profile/{{search}}'>{{ search }}</td>
+<td><center><span style="text-decoration: underline; color: #3366ff;"></span><center></center></center></td>
+<td><br /><img style="display: block; margin-left: auto; margin-right: auto;" src="" alt="" width="67" height="67" /></td>
+</tr>
+{% endif %}
+
 <tr>
 <td style="text-align: center;">Perry Donham</td>
 <td><center><span style="text-decoration: underline; color: #3366ff;">@PerrydBUCS</span><center></center></center></td>
