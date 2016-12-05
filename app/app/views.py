@@ -4,6 +4,8 @@ from flask import g, render_template, redirect, request, session, url_for
 from app import app, db
 from models import User
 from keys import *
+import networkx as nx
+import matplotlib.pyplot as plt
 # Facebook app details
 
 
@@ -18,6 +20,34 @@ def index():
     # Otherwise, a user is not logged in.
     return render_template('login.html', app_id=FB_APP_ID, name=FB_APP_NAME)
 
+def getGraph(egoUser):
+	followers = TwitterHelper().getFollowers(egoUser)
+	followees = TwitterHelper().getFollowees(egoUser)
+
+	DG = nx.DiGraph()
+	e_followers = [(egoUser, f) for f in followers]
+
+	filtered_followees = [t for t in followees if t in followers]
+	e_followees = [(t, egoUser) for t in filtered_followees]
+
+	DG.add_edges_from(e_followers, color = 'blue')
+	DG.add_edges_from(e_followees, color = 'red')
+
+	labels = {}
+	for node in DG.nodes():
+	    labels[node] = node
+
+	pos=nx.spring_layout(DG)
+
+	nx.draw_networkx_nodes(DG, pos, nodelist = followers, node_color = 'b')
+	nx.draw_networkx_nodes(DG, pos, nodelist = [egoUser], node_color = 'r')
+
+	nx.draw_networkx_edges(DG, pos, edgelist = e_followers, edge_color = 'b', arrows = True)
+	nx.draw_networkx_edges(DG, pos, edgelist = e_followees, edge_color = 'r', arrows = True)
+
+	nx.draw_networkx_labels(DG, pos, labels)
+	plt.axis('off')
+	plt.savefig(egoUser+'relationship_map.png')
 
 @app.route('/logout')
 def logout():
