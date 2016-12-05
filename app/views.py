@@ -5,6 +5,7 @@ from flaskext.mysql import MySQL
 import flask_login as flask_login
 import datetime
 import operator
+import facebook
 
 #for image uploading
 from werkzeug import secure_filename
@@ -215,10 +216,19 @@ def results(input_name):
 	return render_template('results.html', search = returned)
 	#return render_template('results.html', search = input_name)
 	
-	
+
 @app.route("/profile/<string:handle>", methods=['GET'])
 def profile(handle):
     helper = TwitterHelper()
     returned = helper.searchUsers(handle)
     tsentiment = helper.TweetSentAnalysis(handle)
     return render_template('profile.html', profile = returned[0], usersentiment = tsentiment)
+    
+@app.route("/fb", methods=['GET'])
+def fb():
+    helper = FacebookHelper('EAAZAx4mZAxoJkBAETkEtzNZAXagGiRnm8RfGWMmCxVLQt3HeZBnq8snABZACdiSh8oDD8ZC44UcmkwyVLMnaV0qwR9Hng4noWWmmHm356PgkmguBQshXprRLyRRgjdLoYpreKK7PfKNtQnkZBt30dE9JgwgCuWiTazZAtZCf2KIzPkwZDZD') ##need to put the key in here!!
+    returned2 = helper.getBasicInfo()
+    fbsentiment = helper.FBSentAnalysis()
+    return render_template('fbprofile.html', profile = returned2, usersentiment = fbsentiment)
+    
+    
