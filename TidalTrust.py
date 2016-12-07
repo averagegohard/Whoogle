@@ -126,21 +126,42 @@ def compute_trust(network, source, sink, decision=None, tag="weight"):
     return trust_results
     
 
+#test    
+sample = [{'username': 'Alice',
+                   'followers': [{'followers_username': 'Arthur',
+                                  'followers_count': 2}]},
+                  {'username': 'Arthur',
+                   'followers': [{'followers_username': 'Alice', 'followers_count': 3},
+                                 {'followers_username': 'Kate', 'followers_count': 4}]},
+                  {'username': 'Kate',
+                   'followers': [{'followers_username': 'Bill', 'followers_count': 245},
+                                 {'followers_username': 'P3t3r', 'followers_count': 21},
+                                 {'followers_username': 'Derek', 'followers_count': 2},
+                                 {'followers_username': 'ZooMan123', 'followers_count': 21}]},
+                  {'username': 'Derek',
+                   'followers': [{'followers_username': 'Shane', 'followers_count': 12},
+                                 {'followers_username': 'Carly', 'followers_count': 2},
+                                 {'followers_username': 'Superman', 'followers_count': 32}]}]
+i = 0
+j = 0
 G = nx.DiGraph()
-G.add_edges_from([("1","2",dict(cooking=10, crime=4)),
-                      ("1","3",dict(cooking=8, crime=7)),
-                      ("1","4",dict(cooking=9, crime=6)),
-                      ("2","5",dict(cooking=9, crime=9)),
-                      ("3","5",dict(cooking=10, crime=5)),
-                      ("3","6",dict(cooking=10, crime=6)),
-                      #(3,7,dict(cooking=7)),
-                      ("4","5",dict(cooking=8, crime=7)),
-                      ("4","6",dict(cooking=9, crime=6)),
-                      ("5","7",dict(cooking=8, crime=5)),
-                      ("6","7",dict(cooking=6, crime=7)),
-                      ("6","8",dict(cooking=5, crime=7)),
-                      ("8","4",dict(cooking=5, crime=7)),
-                      ("3","2",dict(cooking=5, crime=7)),
-                      ("2","1",dict(cooking=5, crime=7)),
-                      ])
-print(tidal_trust('1','3',G,'cooking'))
+edges = []
+for i in range(len(sample)):
+    for j in range(len(sample[i]['followers'])):
+        edges.append((sample[i]['username'],sample[i]['followers'][j]['followers_username']))
+        G.add_edge(sample[i]['username'],sample[i]['followers'][j]['followers_username'],dict(attr = 1))
+result = tidal_trust('Alice','Derek', G,'attr')
+pos=nx.spring_layout(G)
+
+labels = {}
+for node in G.nodes():
+    labels[node] = node
+
+nx.draw_networkx_nodes(G, pos, nodelist = result['nodes_used'], node_color = 'r')
+nx.draw_networkx_nodes(G, pos, nodelist = result['nodes_unused'], node_color = 'b')
+nx.draw_networkx_edges(G, pos, edgelist = edges)
+
+nx.draw_networkx_labels(G, pos, labels)
+plt.axis('off')
+#plt.savefig('tidal trust path.png')
+plt.show()
