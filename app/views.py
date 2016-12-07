@@ -277,7 +277,8 @@ def profile(handle):
     helper = TwitterHelper()
     returned = helper.searchUsers(handle)
     tsentiment = helper.TweetSentAnalysis(handle)
-    return render_template('profile.html', profile = returned[0], usersentiment = tsentiment)
+    return render_template('profile.html', profile = returned[0], usersentiment = tsentiment, h = handle)
+    @app.route("/profile/<string:handle>", methods=['GET'])
 	
 	
 @app.route("/fb", methods=['GET'])
