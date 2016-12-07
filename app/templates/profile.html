@@ -6,7 +6,6 @@ div.container {
     width: 100%;
     border: 1px solid gray;
 }
-
 header, footer {
     padding: 1em;
     color: white;
@@ -14,14 +13,12 @@ header, footer {
     clear: left;
     text-align: center;
 }
-
 nav {
     float: left;
     max-width: 160px;
     margin: 0;
     padding: 1em;
 }
-
 nav ul {
     list-style-type: none;
     padding: 0;
@@ -30,7 +27,6 @@ nav ul {
 nav ul a {
     text-decoration: none;
 }
-
 article {
     margin-left: 170px;
     border-left: 1px solid gray;
@@ -82,11 +78,9 @@ article {
 {% endif %}
 </tbody>
 </table>
-<p>{% if h %}</p>
-<p><a href="http://www.twitter.com/{{ h }}">Go to {{ h }}'s Twitter</a>
+<p><a href='/map/{{ profile["screen_name"] }}'>{{ profile["name"] }}'s Follower Relationship Map</a></p>
 <p><a href='/search'>Start a new Search</a></p>
 </div>
-<p>{% endif %}</p>
 
 </div>
 </html>
